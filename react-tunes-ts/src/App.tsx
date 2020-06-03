@@ -2,14 +2,14 @@ import React from 'react';
 import { Route, Switch } from "react-router-dom";
 
 // styles & assets
-import logo from './assets/logo.svg';
+// import logo from './assets/logo.svg';
 import './App.scss';
 
 // components
 import {TheNavigation} from "./components/TheNavigation";
-import {Home} from "./components/Home";
-import {About} from "./components/About";
-import {Tunes} from "./components/Tunes";
+import {Home} from "./views/Home";
+import {About} from "./views/About";
+import {Tunes} from "./views/Tunes";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
         </main>
 
         <footer>
-            <img src={logo} className='App-logo' alt="logo"/>
+            {/*<img src={logo} className='App-logo' alt="logo"/>*/}
         </footer>
     </div>
   );
