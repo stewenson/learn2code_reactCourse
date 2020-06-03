@@ -27,7 +27,6 @@ function App() {
         </main>
 
         <footer>
-            {/*<img src={logo} className='App-logo' alt="logo"/>*/}
         </footer>
     </div>
   );

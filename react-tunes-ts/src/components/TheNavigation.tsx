@@ -5,7 +5,6 @@ import {NavLink} from "react-router-dom"
 import styles from  './TheNavigation.module.scss'
 
 interface Props {
-
 }
 
 export const TheNavigation: React.FC<Props> = () =>{

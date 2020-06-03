@@ -1,4 +1,8 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react'
+import React, {useState} from 'react'
+
+// component
+import {TunesList} from "../components/tunes/TunesList";
+import {TunesSearchForm} from "../components/tunes/TunesSearchForm";
 
 interface Props {
 
@@ -6,45 +10,38 @@ interface Props {
 
 // component
 export const Tunes: React.FC<Props> = () => {
-    //state
-    const [query, setQuery] = useState('')
+    // state
+    const [searchQuery, setSearchQuery] = useState('')
     const [songs, setSongs] = useState([
         {id: 1, artist: 'Great Artist', name: 'Great song'},
         {id: 2, artist: 'Vcera vecer hrala srna', name: 'pokemon'},
         {id: 3, artist: 'QWE', name: 'qeqw'}
     ])
 
-    // Submit form
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    // callback
+    const handleSearchFormSubmit = (data: string) => {
         const newSong = {
             id: Math.max(...songs.map(s => s.id)) + 1,
-            artist: query,
-            name: query
+            artist: data,
+            name: data
         }
-        setSongs([...songs, newSong])
+        setSongs([...songs, newSong ])
     }
-    // input element
-    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setQuery(e.target.value)
+
+    const handleInputChange = (data: string) => {
+        setSearchQuery(data)
     }
 
     // template
     return (
-        <div className='home'>
+        <article className='tunes'>
             <h1>Tunes</h1>
-
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={query} onChange={handleInput}/>
-            </form>
-
-            <ul>
-                {songs.map(song => (
-                    <li key={song.id}>
-                        {song.artist + ' - ' + song.name}
-                    </li>
-                ))}
-            </ul>
-        </div>
+            <TunesSearchForm
+                searchQuery={searchQuery}
+                onInputChange={handleInputChange}
+                onSearchFormSubmit={handleSearchFormSubmit}
+            />
+            <TunesList songs={songs}/>
+        </article>
     )
 }
