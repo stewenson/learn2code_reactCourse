@@ -1,26 +1,31 @@
-import React, {ChangeEvent, FormEvent} from 'react'
-
+import React, {ChangeEvent, FormEvent, useRef} from 'react'
+import { debounce } from 'lodash-es'
 //Styles
 import './TunesSearchForm.scss'
 
 // props
 interface Props {
-    searchQuery: string
-    onSearchFormSubmit: (data: string) => void
-    onInputChange: (data: string) => void
+    onSearch: (query: string) => void
 }
 
 // component
 export const TunesSearchForm: React.FC<Props> = (props) => {
-    const { searchQuery } = props
+    const searchInput = useRef<HTMLInputElement>(null)
+
     // Submit form
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-       props.onSearchFormSubmit(searchQuery)
+        e.preventDefault()
+        searchForMusic()
     }
     // input element
-    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-        props.onInputChange(e.target.value)
+    const handleInput = debounce( (e: ChangeEvent<HTMLInputElement>) => {
+        searchForMusic()
+    }, 500)
+
+    // search for music
+    const searchForMusic = () => {
+        let searchString = searchInput.current?.value
+        if (searchString) props.onSearch(searchString)
     }
 
     // template
@@ -29,7 +34,8 @@ export const TunesSearchForm: React.FC<Props> = (props) => {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    value={searchQuery}
+                    autoFocus
+                    ref={searchInput}
                     onChange={handleInput}
                     className='search'
                 />

@@ -2,9 +2,12 @@ import React from 'react'
 
 //Styles
 import './TunesList.scss'
+import {Songs} from "../../types";
+
+import {TunesSong} from "./TunesSong";
 
 interface Props {
-    songs: {id: number, artist: string, name: string}[]
+    songs: Songs[] // pole objektov {}[]
 }
 
 export const TunesList: React.FC<Props> = props => {
@@ -15,7 +18,7 @@ export const TunesList: React.FC<Props> = props => {
             <ul className='tunes-list'>
                 {songs.map(song => (
                     <li key={song.id}>
-                        {song.artist + ' - ' + song.name}
+                        <TunesSong song={song}/>
                     </li>
                 ))}
             </ul>

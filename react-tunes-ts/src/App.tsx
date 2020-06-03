@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from "react-router-dom";
 
 // styles & assets
-// import logo from './assets/logo.svg';
 import './App.scss';
 
 // components

@@ -1,46 +1,59 @@
 import React, {useState} from 'react'
-
-// component
+import {Songs} from "../types";
+import axios from 'axios'
+// components
 import {TunesList} from "../components/tunes/TunesList";
 import {TunesSearchForm} from "../components/tunes/TunesSearchForm";
 
-interface Props {
-
+interface SongFromITunes {
+    trackId: number
+    artistName: string
+    previewUrl: string
+    artworkUrl100?: string
+    trackName: string
+    collectionName: string
+    kind?: string
 }
 
 // component
-export const Tunes: React.FC<Props> = () => {
+export const Tunes: React.FC = () => {
     // state
-    const [searchQuery, setSearchQuery] = useState('')
-    const [songs, setSongs] = useState([
-        {id: 1, artist: 'Great Artist', name: 'Great song'},
-        {id: 2, artist: 'Vcera vecer hrala srna', name: 'pokemon'},
-        {id: 3, artist: 'QWE', name: 'qeqw'}
-    ])
+    const [songs, setSongs] = useState([])
 
     // callback
-    const handleSearchFormSubmit = (data: string) => {
-        const newSong = {
-            id: Math.max(...songs.map(s => s.id)) + 1,
-            artist: data,
-            name: data
-        }
-        setSongs([...songs, newSong ])
+    const handleSearch = (query: string) => {
+        axios.get(
+            `https://itunes.apple.com/search
+				?term=${encodeURI(query)}
+				&entity=musicTrack
+				&limit=5`
+        ).then(response => {
+            let iTunesSongs = response.data.results
+                .filter((song: SongFromITunes) => song.kind === 'song')
+                .map((song: SongFromITunes) => extractData(song))
+
+            setSongs(iTunesSongs)
+        })
     }
 
-    const handleInputChange = (data: string) => {
-        setSearchQuery(data)
+    // @ts-ignore
+    const extractData = ({
+        trackId: id,
+        artistName: artist,
+        previewUrl: audioFile,
+        artworkUrl100: artwork,
+        trackName: title,
+        collectionName: album
+    }: SongFromITunes) => {
+        return {id, artist, audioFile, artwork, title, album} as Songs
     }
+
 
     // template
     return (
         <article className='tunes'>
             <h1>Tunes</h1>
-            <TunesSearchForm
-                searchQuery={searchQuery}
-                onInputChange={handleInputChange}
-                onSearchFormSubmit={handleSearchFormSubmit}
-            />
+            <TunesSearchForm onSearch={handleSearch}/>
             <TunesList songs={songs}/>
         </article>
     )
