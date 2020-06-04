@@ -1,4 +1,5 @@
 import React from 'react'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 //Styles
 import './TunesList.scss'
@@ -15,13 +16,15 @@ export const TunesList: React.FC<Props> = props => {
 
     return (
         <div>
-            <ul className='tunes-list'>
+            <TransitionGroup component="ul" className='tunes-list'>
                 {songs.map(song => (
-                    <li key={song.id}>
-                        <TunesSong song={song}/>
-                    </li>
+                    <CSSTransition key={song.id} timeout={200} classNames="song">
+                        <li key={song.id}>
+                            <TunesSong song={song}/>
+                        </li>
+                    </CSSTransition>
                 ))}
-            </ul>
+            </TransitionGroup>
         </div>
     )
 }
