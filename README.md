@@ -1,6 +1,7 @@
 # React iTunes mini app
-It is a simple React application, created using a learn2code course
+It is a simple React application, created using a learn2code course.
 
+You can try this app on http://itunes.martinbaliak.sk
 ## Technologies used
 
 1. React hooks
