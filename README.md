@@ -1,7 +1,8 @@
 # React iTunes mini app
 It is a simple React application, created using a learn2code course
 
-##Technologies used
+## Technologies used
+
 1. React hooks
 2. React Router
 3. Sass
