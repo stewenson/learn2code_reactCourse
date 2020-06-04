@@ -25,8 +25,8 @@ export const Tunes: React.FC = () => {
         axios.get(
             `https://itunes.apple.com/search
 				?term=${encodeURI(query)}
-				&entity=musicTrack
-				&limit=5`
+				&limit=5&
+				entity=musicTrack`
         ).then(response => {
             let iTunesSongs = response.data.results
                 .filter((song: SongFromITunes) => song.kind === 'song')
