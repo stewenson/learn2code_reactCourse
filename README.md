@@ -2,6 +2,9 @@
 It is a simple React application, created using a learn2code course.
 
 You can try this app on http://itunes.martinbaliak.sk
+#### Important
+You must add a CORS unblock chrome extension for the page to work.
+
 ## Technologies used
 
 1. React hooks

@@ -21,17 +21,16 @@ export const Tunes: React.FC = () => {
     const [songs, setSongs] = useState([])
 
     // callback
-    const handleSearch = (query: string) => {
-        axios.get(
-            `https://itunes.apple.com/search
+    const handleSearch = async (query: string) => {
+        const url = `https://itunes.apple.com/search
 				?term=${encodeURI(query)}
 				&limit=5&
-				entity=musicTrack`
-        ).then(response => {
+				entity=musicTrack`;
+        await axios.get(url)
+            .then(response => {
             let iTunesSongs = response.data.results
                 .filter((song: SongFromITunes) => song.kind === 'song')
                 .map((song: SongFromITunes) => extractData(song))
-
             setSongs(iTunesSongs)
         })
     }
